@@ -36,23 +36,6 @@ public class Initial {
              */
             String sql2 = "USE '" + DATABASE_NAME + "'";
             stmt.executeUpdate(sql2);
-            /**
-             * Create the table if it does not exist
-             */
-            String sql3 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" +
-                    "bankAccountUserId VARCHAR(255) PRIMARY KEY," +
-                    "bankAccountName VARCHAR(255) NOT NULL," +
-                    "bankAccountRealId VARCHAR(255) NOT NULL," +
-                    "bankAccountPhoneNumber VARCHAR(255) NOT NULL," +
-                    "bankAccountSex VARCHAR (2)NOT NULL," +
-                    "bankAccountBirthDate VARCHAR(255) NOT NULL," +
-                    "bankAccountBalance INTEGER NOT NULL," +
-                    "bankAccountPassword VARCHAR(255) NOT NULL,"
-                    ;
-            stmt.executeUpdate(sql3);
-            /**
-             *
-             */
             stmt.close();
             conn.close();
 
@@ -79,14 +62,16 @@ public class Initial {
             String sql3 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" +
                     "bankAccountUserId VARCHAR(255) PRIMARY KEY," +
                     "bankAccountName VARCHAR(255) NOT NULL," +
+                    "bankAccountPassword VARCHAR(255) NOT NULL,"+
                     "bankAccountRealId VARCHAR(255) NOT NULL," +
                     "bankAccountPhoneNumber VARCHAR(255) NOT NULL," +
                     "bankAccountSex VARCHAR (2)NOT NULL," +
                     "bankAccountBirthDate VARCHAR(255) NOT NULL," +
-                    "bankAccountBalance INTEGER NOT NULL," +
-                    "bankAccountPassword VARCHAR(255) NOT NULL,"
+                    "bankAccountBalance INTEGER NOT NULL,"
                     ;
             stmt.executeUpdate(sql3);
+            stmt.close();
+            conn.close();
         }
         catch (SQLException se) {
             se.printStackTrace();

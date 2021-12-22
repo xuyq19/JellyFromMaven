@@ -5,7 +5,7 @@ public class Counter {
     /**
      * This is used to keep track of the number of accounts in the database.
      */
-    int counter=0;
+    static int counter=0;
     public static int getCounter() {
         /**
          * Connects to the database and gets the number of accounts in the database.
@@ -43,8 +43,9 @@ public class Counter {
          */
         finally {
             try {
-                if (stmt != null)
+                if (stmt != null) {
                     stmt.close();
+                }
             } catch (SQLException se2) {
                 se2.printStackTrace();
             }

@@ -39,7 +39,13 @@ public class User {
     /**
      *银行用户余额
      */
-    public User(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance) {
+    public User(String bankAccountUserId,
+                String bankAccountName,
+                String bankAccountPassword,
+                String bankAccountRealId,
+                String bankAccountPhoneNumber,
+                char bankAccountSex,
+                String bankAccountBirthDate, double bankAccountBalance) {
         this.bankAccountName = bankAccountName;
         this.bankAccountPassword = bankAccountPassword;
         this.bankAccountRealId = bankAccountRealId;

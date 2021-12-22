@@ -13,6 +13,7 @@ import static main.server.Main.USER;
 public class ReadAll {
     /**
      * This method is used to read all the data from the database.
+     *
      * @return a string array that contains all the data from the database.
      */
     public static User[] readAll() throws Exception {
@@ -39,47 +40,27 @@ public class ReadAll {
             /**
              * This is the counter used to store the data from the database.
              */
-            int index=0;
+            int index = 0;
             /**
              * Use User[] to store the data from the database.
              */
-            for(index=0;rs.next();index++) {
+            for (index = 0; rs.next(); index++) {
                 /**
                  * This is the bankAccountUserId from the database.
                  */
-                User[index]. = rs.getString("bankAccountUserId");
-                /**
-                 * This is the bankAccountPassword from the database.
-                 */
-                String bankAccountPassword = rs.getString("bankAccountPassword");
-                /**
-                 * This is the bankAccountRealId from the database.
-                 */
-                String bankAccountRealId = rs.getString("bankAccountRealId");
-                /**
-                 * This is the bankAccountPhoneNumber from the database.
-                 */
-                String bankAccountPhoneNumber = rs.getString("bankAccountPhoneNumber");
-                /**
-                 * This is the bankAccountSex from the database.
-                 */
                 String bankAccountSexString = rs.getString("bankAccountSex");
-                char bankAccountSex=bankAccountSexString.charAt(0);
-                /**
-                 * This is the bankAccountBirthDate from the database.
-                 */
-                String bankAccountBirthDate = rs.getString("bankAccountBirthDate");
-                /**
-                 * This is the bankAccountBalance from the database.
-                 */
-                double bankAccountBalance = rs.getDouble("bankAccountBalance");
-                /**
-                 * This is the bankAccountName from the database.
-                 */
-                String bankAccountName = rs.getString("bankAccountName");
+                char bankAccountSex = bankAccountSexString.charAt(0);
+                users[index] = new User (
+                    rs.getString("bankAccountUserId"),
+                            rs.getString("bankAccountName"),
+                            rs.getString("bankAccountPassword"),
+                            rs.getString("bankAccountRealId"),
+                            rs.getString("bankAccountPhoneNumber"),
+                            bankAccountSex,
+                            rs.getString("bankAccountBirthDate"),
+                            rs.getDouble("bankAccountBalance"));
             }
-
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return users;

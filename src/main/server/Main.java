@@ -7,6 +7,7 @@ public class Main {
     public static final String DB_URL = "jdbc:mysql://localhost/'DATABASE_NAME'";
     public static final String USER = "xizhilang";
     public static final String PASS = "123456";
+    public static final int SERVER_PORT = 8888;
     public static void main(String[] args) {
         Initial.main();
     }
