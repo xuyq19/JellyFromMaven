@@ -24,64 +24,6 @@ public class Functions {
     }
     User user;
 
-    /**
-     * get all user information from database
-     * @return a arraylist of user
-     */
-    private void readAll(){
-        conn = null;
-        stmt = null;
-        rs = null;
-        sql = null;
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","xizhilang","123456");
-            stmt = conn.createStatement();
-            sql = "SELECT * FROM bankaccount";
-            rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                user = new User(rs.getString("bankAccountUserId"),rs.getString("name"),rs.getString("password"),rs.getString("realId"),rs.getString("phoneNumber"),rs.getString("
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
-    private void readSingle(){
-
-    }
-
-    /**
-     * write single user information to database
-     * @param bankAccountUserId
-     * @param bankAccountName
-     * @param bankAccountPassword
-     * @param bankAccountRealId
-     * @param bankAccountPhoneNumber
-     * @param bankAccountSex
-     * @param bankAccountBirthDate
-     * @param bankAccountBalance
-     */
-    private void writeSingle(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance){
-        /**
-         * connect to the database
-         */
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        String sql = null;
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","123456");
-            stmt = conn.createStatement();
-            sql = "INSERT INTO bankaccount VALUES('"+bankAccountUserId+"','"+bankAccountName+"','"+bankAccountPassword+"','"+bankAccountRealId+"','"+bankAccountPhoneNumber+"','"+bankAccountSex+"','"+bankAccountBirthDate+"','"+bankAccountBalance+"')";
-            stmt.executeUpdate(sql);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-    }
 
     private boolean checkInfo(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance){
         if(bankAccountUserId.length()!=USER_ID_LENGTH){
