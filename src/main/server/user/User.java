@@ -1,9 +1,11 @@
+package main.server.user;
+
+
 /**
- * @author xuyuqi
+ * define user class
  */
-package client;
-public class User {
-    public User(){
+public class DefineUser {
+    public DefineUser(){
     }
     private String bankAccountUserId;
     /**
@@ -37,7 +39,7 @@ public class User {
     /**
      *银行用户余额
      */
-    public User(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance) {
+    public DefineUser(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance) {
         this.bankAccountName = bankAccountName;
         this.bankAccountPassword = bankAccountPassword;
         this.bankAccountRealId = bankAccountRealId;
