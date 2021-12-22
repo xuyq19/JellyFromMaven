@@ -4,8 +4,8 @@ package main.server.user;
 /**
  * define user class
  */
-public class DefineUser {
-    public DefineUser(){
+public class User {
+    public User(){
     }
     private String bankAccountUserId;
     /**
@@ -39,7 +39,7 @@ public class DefineUser {
     /**
      *银行用户余额
      */
-    public DefineUser(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance) {
+    public User(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance) {
         this.bankAccountName = bankAccountName;
         this.bankAccountPassword = bankAccountPassword;
         this.bankAccountRealId = bankAccountRealId;

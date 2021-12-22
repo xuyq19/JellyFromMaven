@@ -1,2 +1,4 @@
-package main.server;public class Main {
+package main.server;
+
+public class Main {
 }
