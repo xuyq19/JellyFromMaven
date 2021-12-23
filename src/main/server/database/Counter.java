@@ -1,6 +1,10 @@
 package main.server.database;
 import java.sql.*;
 import java.util.*;
+
+import static main.server.Main.DB_URL;
+import static main.server.Main.JDBC_DRIVER;
+
 public class Counter {
     /**
      * This is used to keep track of the number of accounts in the database.
@@ -14,13 +18,13 @@ public class Counter {
         Statement stmt = null;
         try {
             /**
-             * Registers the driver.
+             * Registers the  mysql driver.
              */
-            Class.forName("org.sqlite.JDBC");
+            Class.forName(JDBC_DRIVER);
             /**
              * Connects to the database.
              */
-            conn = DriverManager.getConnection("jdbc:sqlite:database.db");
+            conn = DriverManager.getConnection(DB_URL);
             /**
              * Creates a statement.
              */

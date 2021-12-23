@@ -1,66 +1,117 @@
 package main.server.database;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import main.server.user.User;
+
+import java.sql.*;
+
+import static main.server.Main.*;
 
 /**
  * This class is used to read a single user data from the database.
  * @author xuyuq
  */
 public class ReadSingle {
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/3306/xizhilang";
 
     public static boolean checkInformation(String bankAccountUserId, String bankAccountPassword) {
         boolean isSuccess = false;
         try {
+            /**
+             * Register the driver.
+             */
             Class.forName(JDBC_DRIVER);
-            java.sql.Connection conn = DriverManager.getConnection(DB_URL, "root", "123456");
-            if (conn != null) {
-                String sql = "SELECT * FROM bankAccountUserId WHERE bankAccountUserId = ? AND bankAccountPassword = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, bankAccountUserId);
-                pstmt.setString(2, bankAccountPassword);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    isSuccess = true;
-                }
-                conn.close();
+            /**
+             * Establish the connection.
+             */
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            /**
+             * Create the statement.
+             */
+            Statement stmt = conn.createStatement();
+            /**
+             * Choose the database.
+             */
+            stmt.execute("USE " + DATABASE_NAME + ";");
+            /**
+             * Choose the table.
+             */
+            stmt.execute("USE " + TABLE_NAME + ";");
+            /**
+             * Create the query.
+             */
+            String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + bankAccountUserId + " = '" + bankAccountUserId + "' AND " + bankAccountPassword + " = '" + bankAccountPassword + "';";
+            /**
+             * Execute the query.
+             */
+            ResultSet rs = stmt.executeQuery(sql);
+            /**
+             * Check if the query is successful.
+             * If the query is successful, the user information will be stored in the ResultSet.
+             */
+            if (rs.next()) {
+                isSuccess = true;
             }
-        } catch (Exception e) {
+            /**
+             * Close the connection.
+             * Close the statement.
+             */
+            rs.close();
+            stmt.close();
+            conn.close();
+
+    } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return isSuccess;
     }
-    public static String[] returnUser(String bankAccountUserId) {
-        String[] user = new String[8];
+        public static User returnUser(String bankAccountUserId) {
+        User user = new User();
         try {
+            /**
+             * Register the driver.
+             */
             Class.forName(JDBC_DRIVER);
-            java.sql.Connection conn = DriverManager.getConnection(DB_URL, "root", "123456");
-            if (conn != null) {
-                String sql = "SELECT * FROM bankAccountUserId WHERE bankAccountUserId = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, bankAccountUserId);
-                ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    user[0] = rs.getString("bankAccountUserId");
-                    user[1] = rs.getString("bankAccountPassword");
-                    user[2] = rs.getString("bankAccountName");
-                    user[3] = rs.getString("bankAccountRealId");
-
-                }
-                conn.close();
+            /**
+             * Establish the connection.
+             */
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            /**
+             * Create the statement.
+             */
+            Statement stmt = conn.createStatement();
+            /**
+             * Choose the database.
+             */
+            stmt.execute("USE " + DATABASE_NAME + ";");
+            /**
+             * Choose the table.
+             */
+            stmt.execute("USE " + TABLE_NAME + ";");
+            /**
+             * Create the query.
+             */
+            String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + bankAccountUserId + " = '" + bankAccountUserId + "';";
+            /**
+             * Execute the query.
+             */
+            ResultSet rs = stmt.executeQuery(sql);
+            /**
+             * Check if the query is successful.
+             * If the query is successful, the user information will be stored in the ResultSet.
+             */
+            if (rs.next()) {
+                user.setBankAccountUserId(rs.getString(1));
             }
+            /**
+             * Close the connection.
+             */
+            rs.close();
+            stmt.close();
+            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return user;
     }
-
-    /**
-     * This method is used to read a single user data from the database, and return the user data with a string array.
-     * @param bankAccountUserId
-     * @return
-     */
 }

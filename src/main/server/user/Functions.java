@@ -1,76 +1,132 @@
 package main.server.user;
-import java.util.*;
-import java.io.*;
-import java.net.*;
-import java.sql.*;
+
+import main.server.database.*;
+
+import java.util.Scanner;
 
 /**
- * user functions class,processed with database
+ * This class contains all the functions that are used by the user.
+ * @author xuyuq
  */
 public class Functions {
-    private static final int USER_ID_LENGTH = 12;
-    private static final int USER_NAME_LENGTH = 10;
-    private static final int USER_REAL_ID_LENGTH = 12;
-    private static final int USER_BIRTH_DATE_LENGTH = 16;
 
-
-    private Connection conn;
-    private Statement stmt;
-    private ResultSet rs;
-    private String sql;
-    public Functions(){}
-    public void main(String[] args){
+    /**
+     * Constructor for the class.
+     */
+    public Functions() {
+    }
+    public  static void main(String[] args){
 
     }
-    User user;
-
-
-    private boolean checkInfo(String bankAccountUserId, String bankAccountName, String bankAccountPassword, String bankAccountRealId, String bankAccountPhoneNumber, char bankAccountSex, String bankAccountBirthDate, int bankAccountBalance){
-        if(bankAccountUserId.length()!=USER_ID_LENGTH){
-            System.out.println("The length of User ID must be 10!");
-            return false;
-        }
+    /**
+     * This fuctions is used to check if username and password are correct.
+     */
+    public static boolean checkUser(User user){
+        return LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword());
+    }
+    /**
+     * This function is used to create a new user.
+     */
+    public void createBankAccount(String bankAccountName,
+                                  String bankAccountPassword,
+                                  String bankAccountRealId,
+                                  String bankAccountPhoneNumber,
+                                  char bankAccountSex,
+                                  String bankAccountBirthDate, double bankAccountBalance){
+        User user = new User();
         /**
-         * Test the length of User Name
+         * Set bank account user Id
          */
-        for(int i = 0;i < bankAccountUserId.length();i++){
-            if(bankAccountUserId.charAt(i) > '9' || bankAccountUserId.charAt(i) < '0'){
-                return false;
-            }
+        String bankAccountUserId = bankAccountName.substring(0,3)+bankAccountRealId.substring(0,6);
+        user.setBankAccountUserId(bankAccountUserId);
+        /**
+         * Set bank account name
+         */
+        user.setBankAccountName(bankAccountName);
+        /**
+         * Set bank account password
+         */
+        user.setBankAccountPassword(bankAccountPassword);
+        /**
+         * Set bank account real id
+         */
+        user.setBankAccountRealId(bankAccountRealId);
+        /**
+         * Set bank account phone number
+         */
+        user.setBankAccountPhoneNumber(bankAccountPhoneNumber);
+        /**
+         * Set bank account gender
+         */
+        user.setBankAccountSex(bankAccountSex);
+        /**
+         * Set bank account birth date
+         */
+        user.setBankAccountBirthDate(bankAccountBirthDate);
+        /**
+         * Set bank account balance
+         */
+        user.setBankAccountBalance(2000);
+        /**
+         * check if the user already exists
+         */
+        if(!LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
             /**
-             * Test User Real ID
+             * check the information of the user
              */
+            if(!CheckInfo.check(user)){
+                /**
+                 * write the information of the user to the database
+                 */
+                Write.createUser(user);
+            }else{
+                System.out.println("The information you entered is not correct");
+            }
+            System.out.println("The user has been created");
         }
-        if(bankAccountName.length()>USER_NAME_LENGTH){
-            System.out.println("The length of user name must be shorter than 10!");
-            return false;
+
+
+
+
+
+    }
+    public void setUserInfo(User user){
+        if(main.server.database.LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
+            System.out.println("Select the information you want to change");
+            /**
+             * Selections:
+             * 0: set the user's bank account name
+             * 1: set the user's bank account password
+             * 3: set the user's bank account phone number
+             * 4: set the user's bank account sex
+             * 5: set the user's bank account birth date
+             */
+            int selection = 0;
+            main.server.database.Write.setUserInfo(user,selection);
         }
-        /**
-         * Test the length of User Name
-         */
-        if(bankAccountRealId.length()!=USER_REAL_ID_LENGTH) {
-            System.out.println("The length of real ID must be 12!");
-            return false;
+    }
+    public void depositMoney(User user){
+        if(main.server.database.LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
+            System.out.println("Enter the amount you want to deposit");
+            Scanner scanner = new Scanner(System.in);
+            int amount = scanner.nextInt();
+            user.setBankAccountBalance((int) (user.getBankAccountBalance()+amount));
+            main.server.database.Write.setUserInfo(user,6);
         }
-        /**
-         * Test User Phone Number
-         */
-        for(int i = 0;i < bankAccountRealId.length();i++){
-            if(bankAccountRealId.charAt(i) > '9' ||bankAccountRealId.charAt(i) < '0'){
-                System.out.println("The id must be numbers!");
-                return false;
+    }
+    public void withdrawMoney(User user){
+        if(main.server.database.LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
+            System.out.println("Enter the amount you want to withdraw");
+            Scanner scanner = new Scanner(System.in);
+            int amount = scanner.nextInt();
+            if(amount<=user.getBankAccountBalance()){
+                user.setBankAccountBalance((int) (user.getBankAccountBalance()-amount));
+                main.server.database.Write.setUserInfo(user,6);
+            }else{
+                System.out.println("You don't have enough money");
             }
         }
-        if(bankAccountSex != 'F' && bankAccountSex != 'M'){
-            System.out.println("The sex must be F or M");
-        }
-        if(bankAccountBirthDate.length()!=USER_BIRTH_DATE_LENGTH){
-            System.out.println("The format of birthday must be YYYY-MM-DD");
-            return false;
-        }
-        if(bankAccountBirthDate.charAt(4)!='-'||bankAccountBirthDate.charAt(7)!='-'){
-            System.out.println("The format of birthday must be YYYY-MM-DD");
-            return false;
-        }
-        return true;}
+    }
+
+
 }

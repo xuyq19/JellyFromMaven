@@ -4,8 +4,7 @@ import main.server.user.User;
 
 import java.sql.*;
 
-import static main.server.Main.PASS;
-import static main.server.Main.USER;
+import static main.server.Main.*;
 
 /**
  * This class is used to read all the data from the database.
@@ -25,18 +24,27 @@ public class ReadAll {
          * This string is used to store the connection string.
          */
         try {
+            Class.forName(JDBC_DRIVER);
             /**
              * This is the connection to the database.
              */
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useSSL=false", USER, PASS);
+            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             /**
              * This is the statement that is used to read the data from the database.
              */
             Statement stmt = conn.createStatement();
             /**
+             * Choose the database.
+             */
+            stmt.execute("USE " + DATABASE_NAME + ";");
+            /**
+             * Choose the table.
+             */
+            stmt.execute("USE " + TABLE_NAME + ";");
+            /**
              * This is the query that is used to read the data from the database.
              */
-            ResultSet rs = stmt.executeQuery("SELECT * FROM test.test");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLE_NAME + ";");
             /**
              * This is the counter used to store the data from the database.
              */
