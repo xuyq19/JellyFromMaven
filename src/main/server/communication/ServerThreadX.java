@@ -2,12 +2,16 @@ package main.server.communication;
 
 import main.server.database.LoginCheck;
 import main.server.user.User;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 import java.net.*;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * @author xuyuq
+ */
 public class ServerThreadX extends Thread {
     private static Socket socket;
     private static InputStream inputStream;
@@ -94,10 +98,53 @@ public class ServerThreadX extends Thread {
                     while(true){
                         inputStream = socket.getInputStream();
                         message = inputStream.toString();
-                        if(message.equals("0")){
+                        if("0".equals(message)){
                             break;
                         }
-                        swi
+                        /**
+                         * message = "importFromExcel" means import from excel
+                         * message = "exportToExcel" means export to excel
+                         * message = "conclude" means conclude
+                         */
+                        switch (message){
+                            case "importData":
+                                /**
+                                 * flush the message and outputStream
+                                 */
+                                outputStream.flush();
+                                /**
+                                 * messsaage = file name
+                                 */
+                                inputStream = socket.getInputStream();
+                                message = inputStream.toString();
+                                /**
+                                 * import from excel
+                                 */
+                                main.server.admin.Functions.importData(message);
+                                break;
+                            case "exportData":
+                                /**
+                                 * flush the message and outputStream
+                                 */
+                                outputStream.flush();
+                                /**
+                                 * export to excel
+                                 */
+                                main.server.admin.Functions.exportData();
+                                break;
+                            case "conclude":
+                                /**
+                                 * flush the message and outputStream
+                                 */
+                                outputStream.flush();
+                                /**
+                                 * conclude
+                                 */
+                                main.server.admin.Functions.conclude();
+                                break;
+                            default:
+                                return;
+                        }
 
 
                     }
@@ -274,10 +321,12 @@ public class ServerThreadX extends Thread {
             }
             outputStream.write(message.getBytes());
     } catch(
-    IOException e)
+                IOException | InvalidFormatException e)
 
     {
         e.printStackTrace();
+    } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 }

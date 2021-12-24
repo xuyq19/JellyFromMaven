@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import main.server.user.User;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import static main.server.Main.ADMIN_PASSWORD;
 import static main.server.Main.ADMIN_USER_NAME;
@@ -28,29 +29,31 @@ public class Functions {
     /**
      * This method is used to import the data from the xls(x) file.
      */
-    public static void importData() {
+    public static void importData(String fileName) throws IOException, InvalidFormatException {
         /**
          *import the xls(s) file
          */
-
+        main.server.fileio.excel.Reader.readAll(fileName);
     }
 
     /**
      * This method is used to export the data to the xls(x) file.
      */
-    public static void exportData() {
+    public static void exportData() throws Exception {
         /**
          *export the xls(s) file
          */
+        User[] user = main.server.database.ReadAll.readAll();
+        main.server.fileio.excel.Writer.writeExcel(user);
     }
 
     /**
      * This methos is used to conclude and export the data to pdf file
      */
-    public static void conclusions() {
+    public static void conclude() throws Exception {
         /**
          *conclude the pdf file
          */
+        main.server.fileio.pdf.Export.main();
     }
-
 }
