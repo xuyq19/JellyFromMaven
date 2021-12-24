@@ -14,8 +14,8 @@ public class Functions {
     /**
      * This method is used to check whwether the user is an admin or not.
      */
-    public static boolean isAdmin(User user) {
-    if (ADMIN_USER_NAME.equals(user.getBankAccountName())&&ADMIN_PASSWORD.equals(user.getBankAccountPassword())) {
+    public static boolean isAdmin(String bankAccountName,String bankAccountPassword) {
+    if (ADMIN_USER_NAME.equals(bankAccountName)&&ADMIN_PASSWORD.equals(bankAccountPassword)) {
             return true;
         }else{
             return false;

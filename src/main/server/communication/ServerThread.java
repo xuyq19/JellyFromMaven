@@ -5,7 +5,6 @@ import main.server.user.User;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.*;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -46,9 +45,10 @@ public class ServerThread extends Thread {
     public static boolean isConnected() {
         return socket.isConnected();
     }
-    public static String Login() throws IOException {
+    public static void Login() throws IOException {
         String message = "";
-        boolean flag = false;
+        boolean loginFlag = false;
+        boolean adminFlag = false;
         try {
             inputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
@@ -61,8 +61,9 @@ public class ServerThread extends Thread {
             String[] str = message.split(" ");
             String userId = str[0];
             String password = str[1];
-            flag= LoginCheck.login(userId,password);
-            if(flag) {
+            loginFlag= LoginCheck.login(userId,password);
+            adminFlag= main.server.admin.Functions.isAdmin(userId,password);
+            if(loginFlag){
                 /**
                  * return user from database
                  */
@@ -145,6 +146,14 @@ public class ServerThread extends Thread {
                     /**
                      * input thing you want to change
                      */
+                    /**
+                     * Selections:
+                     * 0: set the user's bank account name
+                     * 1: set the user's bank account password
+                     * 3: set the user's bank account phone number
+                     * 4: set the user's bank account sex
+                     * 5: set the user's bank account birth date
+                     */
                     inputStream = socket.getInputStream();
                     buffer = new byte[1024];
                     bytesRead = inputStream.read(buffer);
@@ -153,20 +162,22 @@ public class ServerThread extends Thread {
                      * message = thing you want to change
                      */
                     int selection = Integer.parseInt(message);
-                    main.server.user.Functions.setUserInfo(user0,selection);
-                    /**
-                     * input the information you want to change
-                     */
                     inputStream = socket.getInputStream();
                     buffer = new byte[1024];
                     bytesRead = inputStream.read(buffer);
                     message = new String(buffer, 0, bytesRead);
+                    String information = message;
                     /**
-                     *
+                     * send message to client
                      */
+                    message = main.server.user.Functions.setUserInfo(user0,selection,information);
+                    outputStream.write(message.getBytes());
+                    /**
+                     * flush the message and outputStream
+                     */
+                    outputStream.flush();
+                }else if(message.equals(""))
 
-
-                }
 
 
 
