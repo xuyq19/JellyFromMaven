@@ -8,13 +8,13 @@ import java.net.*;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class ServerThread extends Thread {
+public class ServerThreadX extends Thread {
     private static Socket socket;
     private static InputStream inputStream;
     private static OutputStream outputStream;
 
-    public ServerThread(Socket socket) {
-        ServerThread.socket = socket;
+    public ServerThreadX(Socket socket) {
+        ServerThreadX.socket = socket;
     }
 
     @Override
@@ -87,6 +87,21 @@ public class ServerThread extends Thread {
                 message = "";
                 inputStream = socket.getInputStream();
                 message = inputStream.toString();
+                if(main.server.admin.Functions.isAdmin(userId, password)){
+                    message = "admin login, please choose the admin function,or press '0' to exit to user function";
+                    outputStream.write(message.getBytes());
+                    outputStream.flush();
+                    while(true){
+                        inputStream = socket.getInputStream();
+                        message = inputStream.toString();
+                        if(message.equals("0")){
+                            break;
+                        }
+                        swi
+
+
+                    }
+                }
                 switch (message) {
                     case "transferToBankAccount":
                         /**
@@ -254,11 +269,10 @@ public class ServerThread extends Thread {
                         outputStream.flush();
                         break;
                 }
+            }else{
+                message = "Login Failed";
             }
-        } else{
-            message = "Login Failed";
-        }
-        outputStream.write(message.getBytes());
+            outputStream.write(message.getBytes());
     } catch(
     IOException e)
 
