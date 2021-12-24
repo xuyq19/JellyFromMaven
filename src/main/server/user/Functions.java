@@ -71,16 +71,16 @@ public class Functions {
          * check if the user already exists
          */
         if(!CheckInfo.check(user)){
-                /**
-                 * write the information of the user to the database
-                 */
-                Write.createUser(user);
-            }else{
-                System.out.println("The information you entered is not correct");
-            }
-            System.out.println("The user has been created");
+            /**
+             * write the information of the user to the database
+             */
+            Write.createUser(user);
+        }else{
+            System.out.println("The information you entered is not correct");
         }
-    public void setUserInfo(User user){
+        System.out.println("The user has been created");
+    }
+    public static void setUserInfo(User user, int selection){
         if(main.server.database.LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
             System.out.println("Select the information you want to change");
             /**
@@ -91,7 +91,6 @@ public class Functions {
              * 4: set the user's bank account sex
              * 5: set the user's bank account birth date
              */
-            int selection = 0;
             main.server.database.Write.setUserInfo(user,selection);
         }
     }
@@ -112,6 +111,24 @@ public class Functions {
             if(amount<=user.getBankAccountBalance()){
                 user.setBankAccountBalance((int) (user.getBankAccountBalance()-amount));
                 main.server.database.Write.setUserInfo(user,6);
+            }else{
+                System.out.println("You don't have enough money");
+            }
+        }
+    }
+    public static void transferToBankAccount(User user0, String bankAccountUserId, double amount){
+        if(main.server.database.LoginCheck.login(user0.getBankAccountUserId(), user0.getBankAccountPassword())){
+            System.out.println("Enter the amount you want to transfer");
+            Scanner scanner = new Scanner(System.in);
+            /**
+             * search the user from the database
+             */
+            User user1 = main.server.database.ReadSingle.returnUser(bankAccountUserId);
+            if(amount<=user0.getBankAccountBalance()){
+                user0.setBankAccountBalance((int) (user0.getBankAccountBalance()-amount));
+                user1.setBankAccountBalance((int) (user1.getBankAccountBalance()+amount));
+                main.server.database.Write.setUserInfo(user0,6);
+                main.server.database.Write.setUserInfo(user1,6);
             }else{
                 System.out.println("You don't have enough money");
             }
