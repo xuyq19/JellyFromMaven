@@ -148,7 +148,7 @@ public class User {
     /**
      *设置银行用户生日
      */
-    public void setBankAccountBalance(int bankAccountBalance){
+    public void setBankAccountBalance(double bankAccountBalance){
         this.bankAccountBalance = bankAccountBalance;
     }
     /**

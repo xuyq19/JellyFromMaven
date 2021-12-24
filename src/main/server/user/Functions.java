@@ -70,11 +70,7 @@ public class Functions {
         /**
          * check if the user already exists
          */
-        if(!LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
-            /**
-             * check the information of the user
-             */
-            if(!CheckInfo.check(user)){
+        if(!CheckInfo.check(user)){
                 /**
                  * write the information of the user to the database
                  */
@@ -84,12 +80,6 @@ public class Functions {
             }
             System.out.println("The user has been created");
         }
-
-
-
-
-
-    }
     public void setUserInfo(User user){
         if(main.server.database.LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())){
             System.out.println("Select the information you want to change");

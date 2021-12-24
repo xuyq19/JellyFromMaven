@@ -19,7 +19,7 @@ public class ReadAll {
         /**
          * This string array is used to store all the data from the database.
          */
-        User[] users = new User[Counter.getCounter()];
+        User[] usersArray = new User[Counter.getCounter()];
         /**
          * This string is used to store the connection string.
          */
@@ -58,19 +58,19 @@ public class ReadAll {
                  */
                 String bankAccountSexString = rs.getString("bankAccountSex");
                 char bankAccountSex = bankAccountSexString.charAt(0);
-                users[index] = new User (
-                    rs.getString("bankAccountUserId"),
-                            rs.getString("bankAccountName"),
-                            rs.getString("bankAccountPassword"),
-                            rs.getString("bankAccountRealId"),
-                            rs.getString("bankAccountPhoneNumber"),
-                            bankAccountSex,
-                            rs.getString("bankAccountBirthDate"),
-                            rs.getDouble("bankAccountBalance"));
+                usersArray[index] = new User (
+                        rs.getString("bankAccountUserId"),
+                        rs.getString("bankAccountName"),
+                        rs.getString("bankAccountPassword"),
+                        rs.getString("bankAccountRealId"),
+                        rs.getString("bankAccountPhoneNumber"),
+                        bankAccountSex,
+                        rs.getString("bankAccountBirthDate"),
+                        rs.getDouble("bankAccountBalance"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return usersArray;
     }
 }

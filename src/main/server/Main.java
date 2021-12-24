@@ -14,6 +14,7 @@ public class Main {
     public static final int USER_PASS_MIN_LENGTH = 4;
     public static final String ADMIN_USER_NAME = "admin";
     public static final String ADMIN_PASSWORD = "123456";
+    public static final String FILE_LOCATION = "/home/xizhilang/bank/files/";
     public static void main(String[] args) {
         Initial.main();
     }

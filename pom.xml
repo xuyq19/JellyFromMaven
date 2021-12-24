@@ -12,6 +12,10 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+    <scm>
+        <url>https://github.com/xuyq19/JellyFromMaven</url>
+        <connection>scm:git:https://github.com/xuyq19/JellyFromMaven</connection>
+    </scm>
 <dependencies>
     <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
     <dependency>
@@ -25,6 +29,40 @@
         <artifactId>mysql-connector-java</artifactId>
         <version>8.0.27</version>
     </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>5.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>3.16</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>3.14</version>
+    </dependency>
+    <!-- 处理excel和上面功能是一样的-->
+    <dependency>
+        <groupId>net.sourceforge.jexcelapi</groupId>
+        <artifactId>jxl</artifactId>
+        <version>2.6.10</version>
+    </dependency>
+    <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>itextpdf</artifactId>
+        <version>5.5.4</version>
+    </dependency>
+    <dependency>
+        <groupId>com.itextpdf</groupId>
+        <artifactId>itext-asian</artifactId>
+        <version>5.2.0</version>
+    </dependency>
+
+
+
 
 
 </dependencies>
