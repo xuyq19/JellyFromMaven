@@ -114,7 +114,7 @@ public class Functions {
             return "The information you entered is not correct";
         }
 
-}
+    }
 
     public static void depositMoney(User user, double amount) {
         user.setBankAccountBalance(user.getBankAccountBalance() + amount);
@@ -122,15 +122,23 @@ public class Functions {
 
     }
 
-    public void withdrawMoney(User user, double amount) {
-        if (main.server.database.LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword())) {
-            if (amount <= user.getBankAccountBalance()) {
-                user.setBankAccountBalance((int) (user.getBankAccountBalance() - amount));
-                main.server.database.Write.setUserInfo(user, 6);
-            } else {
-                System.out.println("You don't have enough money");
-            }
+    public static String withdrawMoney(User user, double amount) {
+        if (amount <= user.getBankAccountBalance()) {
+            user.setBankAccountBalance((int) (user.getBankAccountBalance() - amount));
+            main.server.database.Write.setUserInfo(user, 6);
+            return "The money has been withdrawn";
+        } else {
+            return "The amount you entered is not correct or you don't have enough money";
         }
+    }
+    public static String getBankAccountInfo(User user) {
+        return (String) ("The user's Id is " + user.getBankAccountUserId() + "\n" +
+                "The user's name is " + user.getBankAccountName() + "\n" +
+                "The user's real Id is " + user.getBankAccountRealId() + "\n" +
+                "The user's phone number is " + user.getBankAccountPhoneNumber() + "\n" +
+                "The user's gender is" + String.valueOf(user.getBankAccountSex()) + "\n" +
+                "The user's birth date is " + user.getBankAccountBirthDate() + "\n" +
+                "The user's balance is" + user.getBankAccountBalance() + "\n");
     }
 
     public static void transferToBankAccount(User user0, String bankAccountUserId, double amount) {
