@@ -44,7 +44,7 @@ public class ReadAll {
             /**
              * This is the query that is used to read the data from the database.
              */
-            ResultSet rs = stmt.executeQuery("SELECT * FROM " + TABLE_NAME + ";");
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + TABLE_NAME + ";");
             /**
              * This is the counter used to store the data from the database.
              */
@@ -52,21 +52,21 @@ public class ReadAll {
             /**
              * Use User[] to store the data from the database.
              */
-            for (index = 0; rs.next(); index++) {
+            for (index = 0; resultSet.next(); index++) {
                 /**
                  * This is the bankAccountUserId from the database.
                  */
-                String bankAccountSexString = rs.getString("bankAccountSex");
+                String bankAccountSexString = resultSet.getString("bankAccountSex");
                 char bankAccountSex = bankAccountSexString.charAt(0);
                 usersArray[index] = new User (
-                        rs.getString("bankAccountUserId"),
-                        rs.getString("bankAccountName"),
-                        rs.getString("bankAccountPassword"),
-                        rs.getString("bankAccountRealId"),
-                        rs.getString("bankAccountPhoneNumber"),
+                        resultSet.getString("bankAccountUserId"),
+                        resultSet.getString("bankAccountName"),
+                        resultSet.getString("bankAccountPassword"),
+                        resultSet.getString("bankAccountRealId"),
+                        resultSet.getString("bankAccountPhoneNumber"),
                         bankAccountSex,
-                        rs.getString("bankAccountBirthDate"),
-                        rs.getDouble("bankAccountBalance"));
+                        resultSet.getString("bankAccountBirthDate"),
+                        resultSet.getDouble("bankAccountBalance"));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -21,12 +21,6 @@ public class Functions {
 
     }
 
-    /**
-     * This fuctions is used to check if username and password are correct.
-     */
-    public static boolean checkUser(User user) {
-        return LoginCheck.login(user.getBankAccountUserId(), user.getBankAccountPassword());
-    }
 
     /**
      * This function is used to create a new user.
@@ -74,7 +68,7 @@ public class Functions {
         /**
          * check if the user already exists
          */
-        if (!CheckInfo.check(user)) {
+        if (CheckInfo.check(user) == "OK") {
             /**
              * write the information of the user to the database
              */
@@ -106,7 +100,7 @@ public class Functions {
                 return "The selection you entered is not correct";
             }
         }
-        if (CheckInfo.check(user)) {
+        if (CheckInfo.check(user) == "OK") {
             main.server.database.Write.setUserInfo(user, selection);
             return "The information has been changed";
         } else {
@@ -131,6 +125,7 @@ public class Functions {
             return "The amount you entered is not correct or you don't have enough money";
         }
     }
+
     public static String getBankAccountInfo(User user) {
         return (String) ("The user's Id is " + user.getBankAccountUserId() + "\n" +
                 "The user's name is " + user.getBankAccountName() + "\n" +
@@ -157,6 +152,19 @@ public class Functions {
             } else {
                 System.out.println("You don't have enough money");
             }
+        }
+    }
+
+    public static String register(String bankAccountName,
+                                  String bankAccountPassword,
+                                  String bankAccountRealId,
+                                  String bankAccountPhoneNumber,
+                                  char bankAccountSex,
+                                  String bankAccountBirthDate) {
+        if (Initial.initial(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountSex, bankAccountBirthDate) == "OK") {
+            return "OK";
+        } else {
+            return Initial.initial(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountSex, bankAccountBirthDate);
         }
     }
 

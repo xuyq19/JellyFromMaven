@@ -18,102 +18,75 @@ public class CheckInfo {
      * @param user The information of a user.
      * @return The result of checking.
      */
-    public static boolean check(User user) {
-        /**
-         * Check the user id whether it is null.
-         */
-        if(user.getBankAccountUserId() == null || user.getBankAccountUserId().equals("")) {
-            System.out.println("User ID is empty.");
-            return false;
-        }
-        /**
-         * Check the length of user ID.
-         */
-        if(user.getBankAccountUserId().length() != USER_ID_LENGTH) {
-            System.out.println("User ID is invalid.");
-            return false;
-        }
-        /**
-         * check userid whether digit
-         */
-        for(int i = 0; i < user.getBankAccountUserId().length(); i++) {
-            if(!Character.isDigit(user.getBankAccountUserId().charAt(i))) {
-                System.out.println("User ID is invalid.");
-                return false;
-            }
-        }
+    public static String check(User user) {
         /**
          * Check the password whether it is null.
          */
-        if(user.getBankAccountPassword() == null || user.getBankAccountPassword().equals("")) {
-            return false;
+        if (user.getBankAccountPassword() == null || user.getBankAccountPassword().equals("")) {
+            return "Password cannot be null.";
         }
         /**
          * Check the length of password.
          */
-        if(user.getBankAccountPassword().length() < USER_PASS_MIN_LENGTH) {
-            System.out.println("Password is too short.");
-            return false;
+        if (user.getBankAccountPassword().length() < USER_PASS_MIN_LENGTH) {
+            return "Password length error.";
         }
         /**
          * Check the user real id whether it is null.
          */
-        if(user.getBankAccountRealId() == null || user.getBankAccountRealId().equals("")) {
-            System.out.println("Real ID is empty.");
-            return false;
+        if (user.getBankAccountRealId() == null || user.getBankAccountRealId().equals("")) {
+            return "User real id cannot be null.";
         }
         /**
          * Check the length of real ID.
          */
-        if(user.getBankAccountRealId().length() != USER_REAL_ID_LENGTH) {
-            System.out.println("Real ID length error.");
-            return false;
+        if (user.getBankAccountRealId().length() != USER_REAL_ID_LENGTH) {
+            return "User real id length error.";
         }
         /**
          * Check the real ID whether digit.
          */
-        for(int i = 0; i < user.getBankAccountRealId().length(); i++) {
-            if(!Character.isDigit(user.getBankAccountRealId().charAt(i))) {
-                System.out.println("Real ID must be all digits.");
-                return false;
+        for (int i = 0; i < user.getBankAccountRealId().length(); i++) {
+            if (!Character.isDigit(user.getBankAccountRealId().charAt(i))) {
+                return "User real id must be digit.";
             }
         }
         /**
          * Check username length
          */
-        if(user.getBankAccountName().length() > USER_NAME_MAX_LENGTH) {
-            System.out.println("Username is too long.");
-            return false;
+        if (user.getBankAccountName().length() > USER_NAME_MAX_LENGTH) {
+            return "User name length error.";
         }
         /**
          * Check whether the username is null.
          */
-        if(user.getBankAccountName() == null || user.getBankAccountName().equals("")) {
-            System.out.println("Username is empty.");
-            return false;
+        if (user.getBankAccountName() == null || user.getBankAccountName().equals("")) {
+            return "User name cannot be null.";
         }
         /**
          * Check the format of gender
          */
-        if(user.getBankAccountSex()!='F'||user.getBankAccountSex()!='M'){
-            System.out.println("Gender format error.");
-            return false;
+        if (user.getBankAccountSex() != 'F' || user.getBankAccountSex() != 'M') {
+            return "Gender format error";
         }
         /**
          * Check user birth date length
          */
-        if(user.getBankAccountBirthDate().length()!=10){
-            System.out.println("The format of birthday must be YYYY-MM-DD");
-            return false;
+        if (user.getBankAccountBirthDate().length() != 10) {
+            return "Bank account birth date format error";
+            /**
+             * Check user birth date format
+             */
         }
-        /**
-         * Check user birth date format
-         */
-        if(user.getBankAccountBirthDate().charAt(4)!='-'||user.getBankAccountBirthDate().charAt(7)!='-'){
-            System.out.println("The format of birthday must be YYYY-MM-DD");
-            return false;
-        }
-        return true;
-}
+        if (user.getBankAccountBirthDate().charAt(4) != '-' || user.getBankAccountBirthDate().charAt(7) != '-') {
+            return "Bank account birth date format error";
 
+        }else{
+            return "OK";
+        }
+
+        /**
+         *
+         */
+    }
 }

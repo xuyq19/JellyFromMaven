@@ -69,7 +69,7 @@ public class ServerThreadX extends Thread {
             String[] str = message.split(" ");
             String userId = str[0];
             String password = str[1];
-            loginFlag = LoginCheck.login(userId, password);
+            loginFlag = main.server.database.ReadSingle.checkInformation(userId, password);
             adminFlag = main.server.admin.Functions.isAdmin(userId, password);
             if (loginFlag) {
                 /**

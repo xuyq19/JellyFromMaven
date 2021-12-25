@@ -35,7 +35,7 @@ public class User {
     /**
      *银行用户生日
      */
-    private double bankAccountBalance=2000;
+    private double bankAccountBalance;
     /**
      *银行用户余额
      */

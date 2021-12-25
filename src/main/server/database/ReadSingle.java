@@ -42,19 +42,19 @@ public class ReadSingle {
             /**
              * Execute the query.
              */
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet resultSet = stmt.executeQuery(sql);
             /**
              * Check if the query is successful.
              * If the query is successful, the user information will be stored in the ResultSet.
              */
-            if (rs.next()) {
+            if (resultSet.next()) {
                 isSuccess = true;
             }
             /**
              * Close the connection.
              * Close the statement.
              */
-            rs.close();
+            resultSet.close();
             stmt.close();
             conn.close();
 
@@ -95,18 +95,18 @@ public class ReadSingle {
             /**
              * Execute the query.
              */
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet resultSet = stmt.executeQuery(sql);
             /**
              * Check if the query is successful.
              * If the query is successful, the user information will be stored in the ResultSet.
              */
-            if (rs.next()) {
-                user.setBankAccountUserId(rs.getString(1));
+            if (resultSet.next()) {
+                user.setBankAccountUserId(resultSet.getString(1));
             }
             /**
              * Close the connection.
              */
-            rs.close();
+            resultSet.close();
             stmt.close();
             conn.close();
         } catch (Exception e) {
