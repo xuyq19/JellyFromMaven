@@ -12,9 +12,6 @@ public class Login {
         this.username = username;
         this.password = password;
     }
-    public class Main extends JFrame implements ActionListener {
-        private JLabel usernameLabel;
-
-    }
+    main.client.communication.SendMessageToServer sendMessageToServer = new main.client.communication.SendMessageToServer(socket);
 }
 

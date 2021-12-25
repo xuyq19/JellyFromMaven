@@ -3,6 +3,7 @@ package main.client;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.net.Socket;
+
 public abstract class Main extends JFrame implements ActionListener{
     private Socket socket;
     private JTextField textField;

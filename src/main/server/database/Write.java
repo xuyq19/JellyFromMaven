@@ -164,6 +164,43 @@ public class Write {
             e.printStackTrace();
         }
     }
+    public static String deleteUser(User user) {
+        /**
+         * Register the driver
+         **/
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            Class.forName(JDBC_DRIVER);
+            /**
+             * Open a connection
+             **/
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            /**
+             * Choose the database
+             **/
+            stmt.execute("USE " + DATABASE_NAME);
+            /**
+             * Choose the table
+             **/
+            stmt.execute("USE " + TABLE_NAME + ";");
+            /**
+             * Delete the user
+             **/
+            stmt.execute("DELETE FROM " + TABLE_NAME + " WHERE bankAccountUserId = '" + user.getBankAccountUserId() + "';");
+            /**
+             * Close the connection
+             **/
+            stmt.close();
+            conn.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "success";
+    }
     /**
      * The method to change information of database.
      * @param user the sql statement to rewrite to the database

@@ -1,7 +1,6 @@
 package main.server.communication;
 
 import main.server.user.User;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,34 +17,6 @@ public class ServerThreadX extends Thread {
 
     public ServerThreadX(Socket socket) {
         ServerThreadX.socket = socket;
-    }
-
-    @Override
-    public void run() {
-        try {
-            /*
-              get the input and output streams
-             */
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
-            /*
-              send the message to the client
-             */
-            String message = "Welcome to the server";
-            outputStream.write(message.getBytes());
-            /*
-              read the message from the client
-             */
-            byte[] buffer = new byte[1024];
-            int bytesRead = inputStream.read(buffer);
-            String clientMessage = new String(buffer, 0, bytesRead);
-            System.out.println("Client message: " + clientMessage);
-            /*
-              close the connection
-             */
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static boolean isConnected() {
@@ -77,7 +48,7 @@ public class ServerThreadX extends Thread {
                 String bankAccountPhoneNumber = userInfo[3];
                 char bankAccountType = userInfo[4].charAt(0);
                 String bankAccountBirthDate = userInfo[5];
-                message=main.server.user.Functions.register(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountType, bankAccountBirthDate);
+                message = main.server.user.Functions.register(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountType, bankAccountBirthDate);
                 /*
                   send message to client
                  */
@@ -118,14 +89,14 @@ public class ServerThreadX extends Thread {
                  */
                 inputStream = socket.getInputStream();
                 message = inputStream.toString();
-                if(main.server.admin.Functions.isAdmin(userId, password)){
+                if (main.server.admin.Functions.isAdmin(userId, password)) {
                     message = "admin login, please choose the admin function,or press '0' to exit to user function";
                     outputStream.write(message.getBytes());
                     outputStream.flush();
-                    while(true){
+                    while (true) {
                         inputStream = socket.getInputStream();
                         message = inputStream.toString();
-                        if("0".equals(message)){
+                        if ("0".equals(message)) {
                             break;
                         }
                         /**
@@ -133,7 +104,7 @@ public class ServerThreadX extends Thread {
                          * message = "exportToExcel" means export to excel
                          * message = "conclude" means conclude
                          */
-                        switch (message){
+                        switch (message) {
                             case "importData":
                                 /**
                                  * flush the message and outputStream
@@ -177,6 +148,20 @@ public class ServerThreadX extends Thread {
                     }
                 }
                 switch (message) {
+                    case "delete":
+                        message = main.server.user.Functions.deleteUser(user0);
+                        /*
+                            send message to client
+                         */
+                        outputStream.write(message.getBytes());
+                        /*
+                            flush the message and outputstream
+                         */
+                        outputStream.flush();
+                        message = "Success";
+                        outputStream.write(message.getBytes());
+                        outputStream.flush();
+                        break;
                     case "transferToBankAccount":
                         /**
                          * send message to client
@@ -226,11 +211,8 @@ public class ServerThreadX extends Thread {
                         /**
                          * start transfer
                          */
-                        main.server.user.Functions.transferToBankAccount(user0, bankAccountUserId, amount);
-                        /**
-                         * send message to client
-                         */
-                        message = "Transfer Success";
+
+                        message = main.server.user.Functions.transferToBankAccount(user0, bankAccountUserId, amount);
                         outputStream.write(message.getBytes());
                         /**
                          * flush the message and outputStream
@@ -346,14 +328,40 @@ public class ServerThreadX extends Thread {
                         outputStream.flush();
                         break;
                 }
-            }else{
+            } else {
                 message = "Login Failed";
             }
             outputStream.write(message.getBytes());
-        } catch(
-                Exception e)
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-        {
+    @Override
+    public void run() {
+        try {
+            /*
+              get the input and output streams
+             */
+            inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+            /*
+              send the message to the client
+             */
+            String message = "Welcome to the server";
+            outputStream.write(message.getBytes());
+            /*
+              read the message from the client
+             */
+            byte[] buffer = new byte[1024];
+            int bytesRead = inputStream.read(buffer);
+            String clientMessage = new String(buffer, 0, bytesRead);
+            System.out.println("Client message: " + clientMessage);
+            /*
+              close the connection
+             */
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -83,23 +83,25 @@ public class Functions {
             return "The amount you entered is not correct or you don't have enough money";
         }
     }
-    public static void transferToBankAccount(User user0, String bankAccountUserId, double amount) {
-        if (main.server.database.LoginCheck.login(user0.getBankAccountUserId(), user0.getBankAccountPassword())) {
-            System.out.println("Enter the amount you want to transfer");
-            Scanner scanner = new Scanner(System.in);
-            /**
-             * search the user from the database
-             */
-            User user1 = main.server.database.ReadSingle.returnUser(bankAccountUserId);
-            if (amount <= user0.getBankAccountBalance()) {
-                user0.setBankAccountBalance((int) (user0.getBankAccountBalance() - amount));
-                user1.setBankAccountBalance((int) (user1.getBankAccountBalance() + amount));
-                main.server.database.Write.setUserInfo(user0, 6);
-                main.server.database.Write.setUserInfo(user1, 6);
-            } else {
-                System.out.println("You don't have enough money");
-            }
+    public static String transferToBankAccount(User user0, String bankAccountUserId, double amount) {
+        System.out.println("Enter the amount you want to transfer");
+        Scanner scanner = new Scanner(System.in);
+        /**
+         * search the user from the database
+         */
+        User user1 = main.server.database.ReadSingle.returnUser(bankAccountUserId);
+        if (amount <= user0.getBankAccountBalance()) {
+            user0.setBankAccountBalance((int) (user0.getBankAccountBalance() - amount));
+            user1.setBankAccountBalance((int) (user1.getBankAccountBalance() + amount));
+            main.server.database.Write.setUserInfo(user0, 6);
+            main.server.database.Write.setUserInfo(user1, 6);
+            return "The money has been transferred";
+        } else {
+            return "The amount you entered is not correct or you don't have enough money";
         }
+    }
+    public static String deleteUser(User user){
+        return main.server.database.Write.deleteUser(user);
     }
 
 
