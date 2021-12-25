@@ -6,6 +6,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import main.server.database.ReadAll;
 import main.server.user.User;
 
 /**
@@ -33,13 +34,11 @@ public class Export {
         /**
          * get sum of balance from database
          */
-        User[] user = new User[main.server.database.Counter.getCounter()];
-        for(int i = 0;i<main.server.database.Counter.getCounter();i++){
-            user[i] =main.server.database.ReadAll.readAll();
-        }
+        User[] users = new User[main.server.database.Counter.getCounter()];
+        users=main.server.database.ReadAll.readAll();
         double sumOfBalance=0;
         for(int i = 0;i<main.server.database.Counter.getCounter();i++){
-            sumOfBalance+=user[i].getBankAccountBalance();
+            sumOfBalance+=users[i].getBankAccountBalance();
         }
 
         document.add(new Paragraph(String.valueOf(sumOfBalance)));

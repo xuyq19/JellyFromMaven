@@ -1,7 +1,5 @@
 package main.server.user;
 
-import main.server.database.*;
-
 import java.util.Scanner;
 
 /**
@@ -25,59 +23,19 @@ public class Functions {
     /**
      * This function is used to create a new user.
      */
-    public void createBankAccount(String bankAccountName,
+    public static String register(String bankAccountName,
                                   String bankAccountPassword,
                                   String bankAccountRealId,
                                   String bankAccountPhoneNumber,
                                   char bankAccountSex,
-                                  String bankAccountBirthDate, double bankAccountBalance) {
-        User user = new User();
-        /**
-         * Set bank account user Id
-         */
-        String bankAccountUserId = bankAccountName.substring(0, 3) + bankAccountRealId.substring(0, 6);
-        user.setBankAccountUserId(bankAccountUserId);
-        /**
-         * Set bank account name
-         */
-        user.setBankAccountName(bankAccountName);
-        /**
-         * Set bank account password
-         */
-        user.setBankAccountPassword(bankAccountPassword);
-        /**
-         * Set bank account real id
-         */
-        user.setBankAccountRealId(bankAccountRealId);
-        /**
-         * Set bank account phone number
-         */
-        user.setBankAccountPhoneNumber(bankAccountPhoneNumber);
-        /**
-         * Set bank account gender
-         */
-        user.setBankAccountSex(bankAccountSex);
-        /**
-         * Set bank account birth date
-         */
-        user.setBankAccountBirthDate(bankAccountBirthDate);
-        /**
-         * Set bank account balance
-         */
-        user.setBankAccountBalance(2000);
-        /**
-         * check if the user already exists
-         */
-        if (CheckInfo.check(user) == "OK") {
-            /**
-             * write the information of the user to the database
-             */
-            Write.createUser(user);
+                                  String bankAccountBirthDate) {
+        if (Initial.initial(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountSex, bankAccountBirthDate) == "OK") {
+            return "OK";
         } else {
-            System.out.println("The information you entered is not correct");
+            return Initial.initial(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountSex, bankAccountBirthDate);
         }
-        System.out.println("The user has been created");
     }
+
 
     public static String setUserInfo(User user, int selection, String information) {
         User userTemp = user;
@@ -152,19 +110,6 @@ public class Functions {
             } else {
                 System.out.println("You don't have enough money");
             }
-        }
-    }
-
-    public static String register(String bankAccountName,
-                                  String bankAccountPassword,
-                                  String bankAccountRealId,
-                                  String bankAccountPhoneNumber,
-                                  char bankAccountSex,
-                                  String bankAccountBirthDate) {
-        if (Initial.initial(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountSex, bankAccountBirthDate) == "OK") {
-            return "OK";
-        } else {
-            return Initial.initial(bankAccountName, bankAccountPassword, bankAccountRealId, bankAccountPhoneNumber, bankAccountSex, bankAccountBirthDate);
         }
     }
 
