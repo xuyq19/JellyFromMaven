@@ -320,11 +320,14 @@ public class ServerThreadX extends Thread {
                          */
                         outputStream.flush();
                         break;
-                    case "getBankAccountInfo":
+                    case "getBankAccountBalance":
                         /*
                           send message to client
                          */
-                        message = main.server.user.Functions.getBankAccountInfo(user0);
+                        /*
+                         convert double into String
+                         */
+                        message = String.valueOf(user0.getBankAccountBalance());
                         outputStream.write(message.getBytes());
                         /*
                           flush the message and outputStream

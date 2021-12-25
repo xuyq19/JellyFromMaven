@@ -83,17 +83,6 @@ public class Functions {
             return "The amount you entered is not correct or you don't have enough money";
         }
     }
-
-    public static String getBankAccountInfo(User user) {
-        return (String) ("The user's Id is " + user.getBankAccountUserId() + "\n" +
-                "The user's name is " + user.getBankAccountName() + "\n" +
-                "The user's real Id is " + user.getBankAccountRealId() + "\n" +
-                "The user's phone number is " + user.getBankAccountPhoneNumber() + "\n" +
-                "The user's gender is" + String.valueOf(user.getBankAccountSex()) + "\n" +
-                "The user's birth date is " + user.getBankAccountBirthDate() + "\n" +
-                "The user's balance is" + user.getBankAccountBalance() + "\n");
-    }
-
     public static void transferToBankAccount(User user0, String bankAccountUserId, double amount) {
         if (main.server.database.LoginCheck.login(user0.getBankAccountUserId(), user0.getBankAccountPassword())) {
             System.out.println("Enter the amount you want to transfer");
