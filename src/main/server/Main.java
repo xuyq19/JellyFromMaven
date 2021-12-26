@@ -1,7 +1,5 @@
 package main.server;
 
-import main.server.communication.ServerX;
-
 import java.io.IOException;
 
 public class Main {
@@ -19,13 +17,4 @@ public class Main {
     public static final String ADMIN_USER_NAME = "admin";
     public static final String ADMIN_PASSWORD = "123456";
     public static final String FILE_LOCATION = "/home/xizhilang/bank/files/";
-
-    public static void main(String[] args) {
-        ServerX server = new ServerX();
-        try {
-            ServerX.main();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

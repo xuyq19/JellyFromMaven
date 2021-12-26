@@ -65,17 +65,7 @@ public class isadmin extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand()=="sure") {
-            /*
-            if () {
-                JOptionPane.showMessageDialog(null, "Yes！", "Message", JOptionPane.PLAIN_MESSAGE);
 
-            }
-            else if()
-            {
-                JOptionPane.showMessageDialog(null, "No！", "message", JOptionPane.ERROR_MESSAGE);
-                dispose();
-            }
-             */
         }
 
 

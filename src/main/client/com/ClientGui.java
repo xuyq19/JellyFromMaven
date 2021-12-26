@@ -21,7 +21,7 @@ public class ClientGui {
 
         try {
 //            System.out.println("连接到主机" + servername +",端口为" + port);
-            Socket client = new Socket(InetAddress.getLocalHost(), 4040);
+            Socket client = new Socket("127.0.0.1", 4040);
             System.out.println("远程主机地址：" + client.getLocalAddress());
 
             new root(client);
