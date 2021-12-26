@@ -1,5 +1,7 @@
 package main.server.communication;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -7,26 +9,26 @@ public class ServerThreadXAdmin extends Thread {
     private static Socket socket;
     private static InputStream inputStream;
     private static OutputStream outputStream;
+
     @Override
-    public void run(){
+    public void run() {
         try {
-            inputStream=socket.getInputStream();
-            outputStream=socket.getOutputStream();
-            String message="Welcome";
+            inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+            String message = "Welcome";
             outputStream.write(message.getBytes());
             outputStream.flush();
 
-            if(login()){
+            if (login()) {
                 while (true) {
-
+                    choose();
                 }
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     public ServerThreadXAdmin(Socket socket) {
         ServerThreadXAdmin.socket = socket;
     }
@@ -39,12 +41,12 @@ public class ServerThreadXAdmin extends Thread {
         String message;
         boolean loginFlag = false;
         boolean adminFlag = false;
-        inputStream =socket.getInputStream();
-        outputStream=socket.getOutputStream();
-        byte[] buffer=new byte[1024];
+        inputStream = socket.getInputStream();
+        outputStream = socket.getOutputStream();
+        byte[] buffer = new byte[1024];
         int bytesRead = inputStream.read(buffer);
-        message=new String(buffer,0,bytesRead);
-        if("login".equals(message)){
+        message = new String(buffer, 0, bytesRead);
+        if ("login".equals(message)) {
             try {
                 inputStream = socket.getInputStream();
                 outputStream = socket.getOutputStream();
@@ -56,7 +58,7 @@ public class ServerThreadXAdmin extends Thread {
                 String password = str[1];
                 loginFlag = main.server.database.ReadSingle.checkInformation(userId, password);
                 adminFlag = main.server.admin.Functions.isAdmin(userId, password);
-                message="success";
+                message = "success";
                 outputStream.write(message.getBytes());
                 outputStream.flush();
             } catch (IOException e) {
@@ -95,6 +97,7 @@ public class ServerThreadXAdmin extends Thread {
             }
         }
     }
+
     public static void importData() {
         try {
             /**
@@ -128,100 +131,53 @@ public class ServerThreadXAdmin extends Thread {
             }
             fileOutputStream.close();
             outputStream.write("success".getBytes());
-            main.server.fileio.excel.Reader.read(filePath);
+            main.server.fileio.excel.Reader.readAll(filePath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
         }
     }
-    public static  void exportData(){
-        /**
-         * flush the message and outputStream
-         */
-        try {
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /**
-         * export to excel
-         */
+
+    public static void exportData() {
         try {
             main.server.admin.Functions.exportData();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        File file0 = new File("/home/xizhilang/bank/output.xlsx");
-        OutputStream outputStream1 = null;
-        try {
-            outputStream1 = new FileOutputStream(file0);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        byte[] buffer0 = new byte[1024];
-        int length = 0;
-        while (true) {
-            try {
-                if (!((length = inputStream.read(buffer0)) != -1)) {
-                    break;}
-            } catch (IOException e) {
-                e.printStackTrace();
+        try{
+            outputStream = socket.getOutputStream();
+            File file = new File("/home/xizhilang/bank/exportData.xlsx");
+            InputStream inputStream = new FileInputStream(file);
+            FileOutputStream fileOutputStream = new FileOutputStream("/home/xizhilang/bank/exportData.xlsx");
+            /**
+             * 发送文件给客户端
+             */
+            int len=-1;
+            byte[] buffer = new byte[1024];
+            while ((len=inputStream.read(buffer))!=-1){
+                fileOutputStream.write(buffer,0,len);
             }
-            try {
-                outputStream1.write(buffer0, 0, length);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        OutputStream outputStream2 = null;
-        try {
-            outputStream2 = socket.getOutputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            outputStream2.write("Success".getBytes());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
     public static void conclusion() throws IOException {
         try {
-            main.server.fileio.pdf.Export.main();
+            main.server.admin.Functions.conclude();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        File file1 = new File("/home/xizhilang/bank/conclusion.pdf");
-        OutputStream outputStream3 = null;
-        try {
-            outputStream3 = new FileOutputStream(file1);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        byte[] buffer2 = new byte[1024];
-        int length1=0;
-        while (true) {
-            try {
-                if (!((length1 = inputStream.read(buffer2)) != -1)) {
-                    break;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            outputStream3.write(buffer2, 0, length1);
-        }
-        OutputStream outputStream4 = null;
-        try {
-            outputStream4 = socket.getOutputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            outputStream4.write("Success".getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        /**
+         * send file to client;
+         */
+        File file = new File("/home/xizhilang/bank/conclusion.pdf");
+        try{
+            FileInputStream fileInputStream = new FileInputStream(file);
+            OutputStream outputStream = socket.getOutputStream();
+
         }
     }
-}
