@@ -72,7 +72,7 @@ public class menu2 extends JFrame implements ActionListener{
         if (e.getActionCommand()=="importdata")
         {
 
-            new importdata().importdata("Upload file");
+            new importdata().importdata("import data",client);
         }
         else if (e.getActionCommand()=="exportdata")
         {
@@ -85,7 +85,11 @@ public class menu2 extends JFrame implements ActionListener{
         }
         else if (e.getActionCommand()=="conclusion")
         {
-            new conclusion().conclusion("Download file");
+            try {
+                new conclusion().conclude(client);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         else if (e.getActionCommand()=="exit")
         {

@@ -100,64 +100,75 @@ public class ServerThreadXAdmin extends Thread {
 
     public static void importData() {
         try {
-            /**
-             * receive file stream from the client, and save it in the server
-             */
             inputStream = socket.getInputStream();
             outputStream = socket.getOutputStream();
+            FileOutputStream fileOutputStream = new FileOutputStream("/home/xizhilang/bank/importData.xlsx",true);
+            /**
+             * read String message from input stream
+             */
             byte[] buffer = new byte[1024];
             int bytesRead = inputStream.read(buffer);
             String message = new String(buffer, 0, bytesRead);
-            String[] str = message.split(" ");
-            String fileName = str[0];
-            /**
-             * create  the file path if not exist
-             */
-            String filePath = "/home/xizhilang/bank/" + fileName;
-            File file = new File(filePath);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            /**
-             * receive the file stream from the client
-             */
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            while (true) {
-                bytesRead = inputStream.read(buffer);
-                if (bytesRead == -1) {
-                    break;
+            if (message.equals("importData")) {
+                /**
+                 * start to receive file input stream
+                 */
+                inputStream = socket.getInputStream();
+                int length = 0;
+                buffer = new byte[1024];
+                while ((length = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, length);
                 }
-                fileOutputStream.write(buffer, 0, bytesRead);
+                fileOutputStream.flush();
+                fileOutputStream.close();
+                message = "success";
+                outputStream.write(message.getBytes());
+                outputStream.flush();
+                outputStream.close();
             }
-            fileOutputStream.close();
-            outputStream.write("success".getBytes());
-            main.server.fileio.excel.Reader.readAll(filePath);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (IOException | InvalidFormatException e) {
+        }
+        try {
+            main.server.admin.Functions.importData("/home/xizhilang/bank/importData.xlsx");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
             e.printStackTrace();
         }
     }
 
     public static void exportData() {
         try {
-            main.server.admin.Functions.exportData();
+            main.server.admin.Functions.conclude();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try{
+        try {
             outputStream = socket.getOutputStream();
             File file = new File("/home/xizhilang/bank/exportData.xlsx");
             InputStream inputStream = new FileInputStream(file);
-            FileOutputStream fileOutputStream = new FileOutputStream("/home/xizhilang/bank/exportData.xlsx");
+            FileOutputStream fileOutputStream = new FileOutputStream("/home/xizhilang/bank/exportData.xlsx", true);
             /**
              * 发送文件给客户端
              */
-            int len=-1;
+            int len = -1;
             byte[] buffer = new byte[1024];
-            while ((len=inputStream.read(buffer))!=-1){
-                fileOutputStream.write(buffer,0,len);
+            while ((len = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, len);
             }
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            buffer = new byte[1024];
+            int bytesRead = inputStream.read(buffer);
+            String message = new String(buffer, 0, bytesRead);
+            if (message.equals("exportDataSuccess")) {
+                inputStream.close();
+                outputStream.flush();
+                outputStream.close();
+            }
+            outputStream.flush();
+            outputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,17 +178,39 @@ public class ServerThreadXAdmin extends Thread {
 
     public static void conclusion() throws IOException {
         try {
-            main.server.admin.Functions.conclude();
+            main.server.admin.Functions.exportData();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /**
-         * send file to client;
-         */
-        File file = new File("/home/xizhilang/bank/conclusion.pdf");
-        try{
-            FileInputStream fileInputStream = new FileInputStream(file);
-            OutputStream outputStream = socket.getOutputStream();
+        try {
+            outputStream = socket.getOutputStream();
+            File file = new File("/home/xizhilang/bank/conclusion.pdf");
+            InputStream inputStream = new FileInputStream(file);
+            FileOutputStream fileOutputStream = new FileOutputStream("/home/xizhilang/bank/conclusion.pdf", true);
+            /**
+             * 发送文件给客户端
+             */
+            int len = -1;
+            byte[] buffer = new byte[1024];
+            while ((len = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, len);
+            }
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            buffer = new byte[1024];
+            int bytesRead = inputStream.read(buffer);
+            String message = new String(buffer, 0, bytesRead);
+            if (message.equals("concludeSuccess")) {
+                inputStream.close();
+                outputStream.flush();
+                outputStream.close();
+            }
+            outputStream.flush();
+            outputStream.close();
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
+}
