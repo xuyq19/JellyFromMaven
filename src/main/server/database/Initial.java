@@ -13,6 +13,7 @@ public class Initial {
         initial.createDatabase();
         initial.createTable();
     }
+
     private void createDatabase() throws Exception {
         Connection conn = null;
         Statement stmt = null;
@@ -43,6 +44,7 @@ public class Initial {
             se.printStackTrace();
         }
     }
+
     private void createTable() throws Exception {
         Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
         Statement stmt = conn.createStatement();
@@ -62,18 +64,16 @@ public class Initial {
             String sql3 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" +
                     "bankAccountUserId VARCHAR(255) PRIMARY KEY," +
                     "bankAccountName VARCHAR(255) NOT NULL," +
-                    "bankAccountPassword VARCHAR(255) NOT NULL,"+
+                    "bankAccountPassword VARCHAR(255) NOT NULL," +
                     "bankAccountRealId VARCHAR(255) NOT NULL," +
                     "bankAccountPhoneNumber VARCHAR(255) NOT NULL," +
                     "bankAccountSex VARCHAR (2)NOT NULL," +
                     "bankAccountBirthDate VARCHAR(255) NOT NULL," +
-                    "bankAccountBalance INTEGER NOT NULL,"
-                    ;
+                    "bankAccountBalance INTEGER NOT NULL,";
             stmt.executeUpdate(sql3);
             stmt.close();
             conn.close();
-        }
-        catch (SQLException se) {
+        } catch (SQLException se) {
             se.printStackTrace();
         }
 

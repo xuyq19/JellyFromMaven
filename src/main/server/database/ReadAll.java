@@ -19,55 +19,39 @@ public class ReadAll {
         /**
          * This string array is used to store all the data from the database.
          */
-        User[] usersArray = new User[Counter.getCounter()];
+        User[] usersArray = new User[Counter.count()];
         /**
          * This string is used to store the connection string.
          */
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName("com.mysql.jdbc.Driver");
             /**
-             * This is the connection to the database.
+             * connect database
              */
-            Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement statement = connection.createStatement();
             /**
-             * This is the statement that is used to read the data from the database.
+             * read all users from database
              */
-            Statement stmt = conn.createStatement();
+
             /**
-             * Choose the database.
+             *  store the data from the database in the string array
              */
-            stmt.execute("USE " + DATABASE_NAME + ";");
-            /**
-             * Choose the table.
-             */
-            stmt.execute("USE " + TABLE_NAME + ";");
-            /**
-             * This is the query that is used to read the data from the database.
-             */
-            ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + TABLE_NAME + ";");
-            /**
-             * This is the counter used to store the data from the database.
-             */
-            int index = 0;
-            /**
-             * Use User[] to store the data from the database.
-             */
-            for (index = 0; resultSet.next(); index++) {
-                /**
-                 * This is the bankAccountUserId from the database.
-                 */
-                String bankAccountSexString = resultSet.getString("bankAccountSex");
-                char bankAccountSex = bankAccountSexString.charAt(0);
-                usersArray[index] = new User (
-                        resultSet.getString("bankAccountUserId"),
-                        resultSet.getString("bankAccountName"),
-                        resultSet.getString("bankAccountPassword"),
-                        resultSet.getString("bankAccountRealId"),
-                        resultSet.getString("bankAccountPhoneNumber"),
-                        bankAccountSex,
-                        resultSet.getString("bankAccountBirthDate"),
-                        resultSet.getDouble("bankAccountBalance"));
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+            for(int i = 0; i < resultSet.getFetchSize(); i++){
+                resultSet.next();
+                usersArray[i].setBankAccountUserId(resultSet.getString("accountId"));
+                usersArray[i].setBankAccountName(resultSet.getString("username"));
+                usersArray[i].setBankAccountPassword(resultSet.getString("password"));
+                usersArray[i].setBankAccountRealId(resultSet.getString("Id"));
+                usersArray[i].setBankAccountPhoneNumber(resultSet.getString("phone"));
+                usersArray[i].setBankAccountSex(resultSet.getString("sex"));
+                usersArray[i].setBankAccountBirthDate(resultSet.getString("birthday"));
+                usersArray[i].setBankAccountBalance(resultSet.getDouble("money"));
+                resultSet.next();
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

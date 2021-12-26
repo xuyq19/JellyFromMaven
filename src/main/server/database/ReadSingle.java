@@ -8,6 +8,7 @@ import static main.server.Main.*;
 
 /**
  * This class is used to read a single user data from the database.
+ *
  * @author xuyuq
  */
 public class ReadSingle {
@@ -58,14 +59,15 @@ public class ReadSingle {
             stmt.close();
             conn.close();
 
-    } catch (SQLException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return isSuccess;
     }
-        public static User returnUser(String bankAccountUserId) {
+
+    public static User returnUser(String bankAccountUserId) {
         User user = new User();
         try {
             /**

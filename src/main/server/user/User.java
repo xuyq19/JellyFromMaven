@@ -5,46 +5,47 @@ package main.server.user;
  * define user class
  */
 public class User {
-    public User(){
-    }
     private String bankAccountUserId;
     /**
-     *十位数的银行用户ID
+     * 十位数的银行用户ID
      */
     private String bankAccountName;
     /**
-     *银行用户名
+     * 银行用户名
      */
     private String bankAccountPassword;
     /**
-     *银行用户密码
+     * 银行用户密码
      */
     private String bankAccountRealId;
     /**
-     *银行用户真实ID
+     * 银行用户真实ID
      */
     private String bankAccountPhoneNumber;
     /**
-     *银行用户手机号
+     * 银行用户手机号
      */
-    private char bankAccountSex;
+    private String bankAccountSex;
     /**
-     *银行用户性别
+     * 银行用户性别
      */
     private String bankAccountBirthDate;
     /**
-     *银行用户生日
+     * 银行用户生日
      */
     private double bankAccountBalance;
+    public User() {
+    }
+
     /**
-     *银行用户余额
+     * 银行用户余额
      */
     public User(String bankAccountUserId,
                 String bankAccountName,
                 String bankAccountPassword,
                 String bankAccountRealId,
                 String bankAccountPhoneNumber,
-                char bankAccountSex,
+                String bankAccountSex,
                 String bankAccountBirthDate, double bankAccountBalance) {
         this.bankAccountName = bankAccountName;
         this.bankAccountPassword = bankAccountPassword;
@@ -55,112 +56,131 @@ public class User {
         this.bankAccountBalance = bankAccountBalance;
         this.bankAccountUserId = bankAccountUserId;
     }
+
     public void setBankAccountUserId() {
         this.bankAccountUserId = bankAccountUserId;
     }
+
     /**
      * 设置银行用户id
      */
-    public String getBankAccountUserId(){
+    public String getBankAccountUserId() {
         return bankAccountUserId;
     }
+
     /**
-     *获取银行用户ID
+     * 获取银行用户余额
      */
-    public String getBankAccountName(){
-        return bankAccountName;
-    }
-    /**
-     *获取银行用户名
-     */
-    public String getBankAccountPassword(){
-        return bankAccountPassword;
-    }
-    /**
-     *获取银行用户密码
-     */
-    public String getBankAccountRealId(){
-        return bankAccountRealId;
-    }
-    /**
-     *获取银行用户真实ID
-     */
-    public String getBankAccountPhoneNumber(){
-        return bankAccountPhoneNumber;
-    }
-    public char getBankAccountSex(){
-        return bankAccountSex;
-    }
-    /**
-     *获取银行用户性别
-     */
-    public String getBankAccountBirthDate(){
-        return bankAccountBirthDate;
-    }
-    /**
-     *获取银行用户生日
-     */
-    public double getBankAccountBalance(){
-        return bankAccountBalance;
-    }
-    /**
-     *获取银行用户余额
-     */
-    public void setBankAccountUserId(String bankAccountUserId){
+    public void setBankAccountUserId(String bankAccountUserId) {
         this.bankAccountUserId = bankAccountUserId;
     }
+
     /**
-     *设置银行用户ID
+     * 获取银行用户ID
      */
-    public void setBankAccountName(String bankAccountBalance){
+    public String getBankAccountName() {
+        return bankAccountName;
+    }
+
+    /**
+     * 设置银行用户ID
+     */
+    public void setBankAccountName(String bankAccountBalance) {
         this.bankAccountName = bankAccountBalance;
     }
+
     /**
-     *设置银行用户名
+     * 获取银行用户名
      */
-    public void setBankAccountPassword(String bankAccountPassword){
+    public String getBankAccountPassword() {
+        return bankAccountPassword;
+    }
+
+    /**
+     * 设置银行用户名
+     */
+    public void setBankAccountPassword(String bankAccountPassword) {
         this.bankAccountPassword = bankAccountPassword;
     }
+
     /**
-     *设置银行用户密码
+     * 获取银行用户密码
      */
-    public void setBankAccountRealId(String bankAccountRealId){
+    public String getBankAccountRealId() {
+        return bankAccountRealId;
+    }
+
+    /**
+     * 设置银行用户密码
+     */
+    public void setBankAccountRealId(String bankAccountRealId) {
         this.bankAccountRealId = bankAccountRealId;
     }
+
     /**
-     *设置银行用户真实ID
+     * 获取银行用户真实ID
      */
-    public void setBankAccountPhoneNumber(String bankAccountPhoneNumber){
+    public String getBankAccountPhoneNumber() {
+        return bankAccountPhoneNumber;
+    }
+
+    /**
+     * 设置银行用户真实ID
+     */
+    public void setBankAccountPhoneNumber(String bankAccountPhoneNumber) {
         this.bankAccountPhoneNumber = bankAccountPhoneNumber;
     }
+
+    public String getBankAccountSex() {
+        return bankAccountSex;
+    }
+
     /**
-     *设置银行用户手机号
+     * 设置银行用户手机号
      */
-    public void setBankAccountSex(char bankAccountSex){
+    public void setBankAccountSex(String bankAccountSex) {
         this.bankAccountSex = bankAccountSex;
     }
+
     /**
-     *设置银行用户性别
+     * 获取银行用户性别
      */
-    public void setBankAccountBirthDate(String bankAccountBirthDate){
+    public String getBankAccountBirthDate() {
+        return bankAccountBirthDate;
+    }
+
+    /**
+     * 设置银行用户性别
+     */
+    public void setBankAccountBirthDate(String bankAccountBirthDate) {
         this.bankAccountBirthDate = bankAccountBirthDate;
     }
+
     /**
-     *设置银行用户生日
+     * 获取银行用户生日
      */
-    public void setBankAccountBalance(double bankAccountBalance){
+    public double getBankAccountBalance() {
+        return bankAccountBalance;
+    }
+
+    /**
+     * 设置银行用户生日
+     */
+    public void setBankAccountBalance(double bankAccountBalance) {
         this.bankAccountBalance = bankAccountBalance;
     }
+
     /**
-     *设置银行用户余额
+     * 设置银行用户余额
      */
-    public void withdrawMoney(double money){
-        this.bankAccountBalance = this.bankAccountBalance-money;
+    public void withdrawMoney(double money) {
+        this.bankAccountBalance = this.bankAccountBalance - money;
     }
+
     /**
-     *取款
+     * 取款
      */
-    public void depositMoney(double money){
-        this.bankAccountBalance = this.bankAccountBalance+money;
+    public void depositMoney(double money) {
+        this.bankAccountBalance = this.bankAccountBalance + money;
     }
 }

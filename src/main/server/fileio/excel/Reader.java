@@ -1,9 +1,11 @@
 package main.server.fileio.excel;
+
 import main.server.user.User;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +41,7 @@ public class Reader {
             userArray[i].setBankAccountPassword(users.get(i)[2]);
             userArray[i].setBankAccountRealId(users.get(i)[3]);
             userArray[i].setBankAccountPhoneNumber(users.get(i)[4]);
-            String bankAccountSexString = users.get(i)[5];
-            char bankAccountSexChar = bankAccountSexString.charAt(0);
-            userArray[i].setBankAccountSex(bankAccountSexChar);
+            userArray[i].setBankAccountSex(users.get(i)[5]);
             userArray[i].setBankAccountBirthDate(users.get(i)[6]);
             String bankAccountBalanceString = users.get(i)[7];
             double bankAccountBalanceDouble = Double.parseDouble(bankAccountBalanceString);

@@ -1,63 +1,50 @@
 package main.server.database;
+
 import java.sql.*;
-import java.util.*;
 
-import static main.server.Main.DB_URL;
-import static main.server.Main.JDBC_DRIVER;
+/**
+ * this class is used to count the number of users
+ */
+public class Counter{
 
-public class Counter {
+    public Counter() {}
+    static Statement stmt = null;
+    static ResultSet rs = null;
     /**
-     * This is used to keep track of the number of accounts in the database.
+     * connect to database
      */
-    static int counter=0;
-    public static int getCounter() {
-        /**
-         * Connects to the database and gets the number of accounts in the database.
-         */
+    final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    final static String DB_URL = "jdbc:mysql://219.246.65.67/bank/";
+    final static String USER = "xizhilang";
+    final static String PASS = "123456";
+
+    public static int count() throws SQLException{
         Connection conn = null;
-        Statement stmt = null;
+        int count = 0;
         try {
-            /**
-             * Registers the  mysql driver.
-             */
             Class.forName(JDBC_DRIVER);
-            /**
-             * Connects to the database.
-             */
-            conn = DriverManager.getConnection(DB_URL);
-            /**
-             * Creates a statement.
-             */
+            conn = DriverManager.getConnection(DB_URL,USER, PASS);
             stmt = conn.createStatement();
-            /**
-             * Executes the query.
-             */
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM accounts");
-            /**
-             * Gets the number of accounts in the database.
-             */
+            String sql = "SELECT COUNT(*) FROM sheet1";
+            rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                counter = rs.getInt(1);
+                count = rs.getInt(1);
             }
-        }catch (Exception e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        /**
-         * Closes the connection.
-         */
-        finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException se2) {
-                se2.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
             }
         }
-        /**
-         * Returns the number of accounts in the database.
-         */
-        return counter;
+        return count;
     }
+
 
 }
