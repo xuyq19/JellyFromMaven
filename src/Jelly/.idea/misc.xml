@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="openjdk-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="UnattendedHostPersistenceState">
+    <option name="openedFilesInfos">
+      <list>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="466" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/main/java/server/admin/Functions.java" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="197" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/main/java/server/admin/communication/ServerThreadXAdmin.java" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="2204" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/main/java/server/main/Main.java" />
+        </OpenedFileInfo>
+      </list>
+    </option>
+  </component>
+</project>
